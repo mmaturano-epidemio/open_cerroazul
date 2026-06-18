@@ -1,0 +1,788 @@
+---
+title: "Resultados: relevamiento territorial Cerro Azul"
+format: 
+  dashboard:
+    orientation: rows
+    theme: [cosmo, custom.scss]
+    logo: logo.png
+    embed-resources: false
+---
+# Introducción
+
+::: {.hero-section}
+[PORTAL ESTADÍSTICO COMUNAL]{.hero-badge}
+
+[Relevamiento territorial 2024-2026]{.hero-title}
+
+[Portal de datos abiertos de la Comuna Villa Cerro Azul. Explore los indicadores de los diferentes sectores a través de las pestañas superiores.]{.hero-subtitle}
+:::
+
+```{r setup, include=FALSE}
+source("setup.R")
+source("gráficos.R")
+```
+
+# Demografía
+
+## {.tabset}
+
+### Población relevada
+
+####
+
+```{r}
+#| content: valuebox
+#| title: "Viviendas relevadas"
+list(
+  icon  = "house-door-fill",
+  bg    = "#fdfaf6",
+  color = "#e8f0e7",
+  value = habitados[, .N]
+)
+```
+
+
+```{r}
+#| content: valuebox
+#| title: "Personas por vivienda (promedio)"
+list(
+  icon  = "house-heart-fill",
+  color = "#e8e0d0",
+  value = media_habitantes |> round(1)
+)
+```
+
+
+####
+
+```{r}
+#| content: valuebox
+#| title: "Población relevada"
+list(
+  icon  = "people",
+  color = "#fdf0e8",
+  value = habitados[, sum(as.numeric(numero_de_habitantes), na.rm = TRUE)]
+)
+```
+
+```{r}
+#| content: valuebox
+#| title: "Promedio de edad (años)"
+list(
+  icon  = "calendar-event",
+  color = "#FFD39B",
+  value = individuos[, mean(as.numeric(edad_anos), na.rm = TRUE) |> round(1)]
+)
+```
+
+
+### Composición de la población
+
+#### {width=50%}
+
+```{r}
+#| title: "Pirámide poblacional: población relevada"
+#| echo: false
+#| message: false
+#| warning: false
+piramide
+```
+
+#### {width=25%}
+
+```{r}
+#| content: valuebox
+#| title: "Viviendas unipersonales"
+list(
+  icon  = "person",
+  bg    = "#fdfaf6",
+  color = "#e8e0d0",
+  value = unipersonales
+)
+```
+
+```{r}
+#| content: valuebox
+#| title: "Viviendas sólo habitadas por >65"
+list(
+  icon  = "people",
+  color = "#e8f0e7",
+  value = mayores_65
+)
+```
+
+```{r}
+#| content: valuebox
+#| title: "Familias monoparentales"
+list(
+  icon  = "people-fill",
+  color = "#fdf0e8",
+  value = viviendas_un_adulto
+  )
+
+```
+#### {width=25%}
+
+```{r}
+#| content: valuebox
+#| title: "Personas descendientes de pueblos originarios"
+list(
+  icon  = "sun",
+  bg    = "#fdfaf6",
+  color = "#e8f0e7",
+  value = indigena
+)
+```
+
+```{r}
+#| content: valuebox
+#| title: "Personas afrodescendientes"
+list(
+  icon  = "globe-europe-africa",
+  color = "#fdf0e8",
+  value = afro
+)
+```
+
+```{r}
+#| content: valuebox
+#| title: "Personas LGBTIQ+"
+list(
+  icon  = "rainbow",
+  color = "#e8e0d0",
+  value = lgbt
+  )
+
+```
+
+### Composición de la población (1)
+
+#### {width=50%}
+
+```{r}
+#| title: "Pirámide poblacional: población relevada"
+#| echo: false
+#| message: false
+#| warning: false
+piramide
+```
+
+#### {width=25%}
+
+```{r}
+#| content: valuebox
+#| title: "Viviendas unipersonales"
+list(
+  icon  = "person",
+  bg    = "#fdfaf6",
+  color = "#e8e0d0",
+  value = unipersonales
+)
+```
+
+```{r}
+#| content: valuebox
+#| title: "Viviendas sólo habitadas por >65"
+list(
+  icon  = "people",
+  color = "#e8f0e7",
+  value = mayores_65
+)
+```
+
+```{r}
+#| content: valuebox
+#| title: "Familias monoparentales"
+list(
+  icon  = "people-fill",
+  color = "#fdf0e8",
+  value = viviendas_un_adulto
+  )
+
+```
+#### {width=25%}
+
+```{r}
+#| content: valuebox
+#| title: "Personas pertenecientes a algún colectivo o identidad"
+list(
+  icon  = "sun",
+  bg    = "#fdfaf6",
+  color = "#e8f0e7",
+  value = alguno
+)
+```
+
+### Composición de la población (2)
+
+#### {width=50%}
+
+```{r}
+#| title: "Pirámide poblacional: población relevada"
+#| echo: false
+#| message: false
+#| warning: false
+piramide
+```
+
+#### {width=25%}
+
+```{r}
+#| content: valuebox
+#| title: "Viviendas unipersonales"
+list(
+  icon  = "person",
+  bg    = "#fdfaf6",
+  color = "#e8e0d0",
+  value = unipersonales
+)
+```
+
+```{r}
+#| content: valuebox
+#| title: "Viviendas sólo habitadas por >65"
+list(
+  icon  = "people",
+  color = "#e8f0e7",
+  value = mayores_65
+)
+```
+
+```{r}
+#| content: valuebox
+#| title: "Familias monoparentales"
+list(
+  icon  = "people-fill",
+  color = "#fdf0e8",
+  value = viviendas_un_adulto
+  )
+
+```
+#### {width=25%}
+
+```{r}
+#| content: valuebox
+#| title: "Personas descendientes de pueblos originarios"
+list(
+  icon  = "sun",
+  bg    = "#fdfaf6",
+  color = "#e8f0e7",
+  value = indigena
+)
+```
+
+```{r}
+#| content: valuebox
+#| title: "Personas afrodescendientes"
+list(
+  icon  = "globe-europe-africa",
+  color = "#fdf0e8",
+  value = afro
+)
+```
+
+### Composición de la población (3)
+
+#### {width=50%}
+
+```{r}
+#| title: "Pirámide poblacional: población relevada"
+#| echo: false
+#| message: false
+#| warning: false
+piramide
+```
+
+#### {width=25%}
+
+```{r}
+#| content: valuebox
+#| title: "Viviendas unipersonales"
+list(
+  icon  = "person",
+  bg    = "#fdfaf6",
+  color = "#e8e0d0",
+  value = unipersonales
+)
+```
+
+```{r}
+#| content: valuebox
+#| title: "Viviendas sólo habitadas por >65"
+list(
+  icon  = "people",
+  color = "#e8f0e7",
+  value = mayores_65
+)
+```
+#### {width=25%}
+```{r}
+#| content: valuebox
+#| title: "Familias monoparentales"
+list(
+  icon  = "people-fill",
+  color = "#fdf0e8",
+  value = viviendas_un_adulto
+  )
+
+```
+
+
+```{r}
+#| content: valuebox
+#| title: "Personas descendientes de pueblos originarios"
+list(
+  icon  = "sun",
+  bg    = "#fdfaf6",
+  color = "#e8f0e7",
+  value = indigena
+)
+```
+
+
+# Infraestructura
+## {.tabset}
+### Vivienda
+##### Condición de la vivienda
+```{r}
+mi_piechart(habitados$vivienda, 
+            titulo = "Condición de la vivienda")
+
+
+```
+
+
+#### Servicios
+```{r}
+tabla_univariada2(servicios[!Servicios == "Gas natural",1:3])
+```
+
+### Recurso hídrico {.tabset}
+#### Fuente y manejo de agua
+#####
+######
+```{r}
+tabla_univariada2(fuente_agua)
+```
+######
+
+```{r}
+tabla_univariada2(acopio_agua[,1:3])
+
+```
+
+#### Capacidad de acopio  
+
+```{r}
+mi_barplot(x = habitados$acopio_agua, 
+           titulo = "Capacidad de acopio de agua", 
+           subtitulo = paste0("Total de viviendas según capacidad en litros, n = ", habitados[,.N]),
+           rotate_labels = TRUE,
+           horizontal = TRUE, 
+           ordenar_por_frecuencia = FALSE
+           )
+```
+
+
+# Salud
+## {.tabset}
+### Cobertura
+#### Cobertura de salud
+```{r}
+mi_barplot(x = individuos$cobertura_de_salud, 
+           titulo = "Total de personas según cobertura de salud", 
+           subtitulo = paste0("Fuente de cobertura de salud autorreportada, n = ", individuos[,.N]), 
+           horizontal = TRUE 
+           )
+```
+
+#### Frecuencia de asistencia al CAPS
+```{r}
+mi_barplot(habitados$con_que_frecuencia_el_grupo_familiar_asiste_al_caps,
+           rotate_labels = TRUE, titulo = "Frecuencia de asistencia al CAPS", 
+           subtitulo = paste0("Frecuencia autorreportada con que el grupo familiar asiste al CAPS, n = ",
+                     nrow(habitados)),
+           ordenar_por_frecuencia = FALSE, 
+           color_barra = "#4a4a4a"
+           
+           )
+```
+
+### Problemas de salud y discapacidad
+#### Principales problemas{width=70%}
+```{r}
+tabla_univariada2(
+  tabla_salud,
+  caption = "Principales problemas de salud crónicos relevados",
+  col_names = c("Patología", "Personas", "%", "Edad Promedio"),
+  align = "lrrr"
+)
+```
+
+
+#### Indicadores {width=30%}
+
+```{r}
+#| content: valuebox
+#| title: "Personas que reportan al menos una limitación"
+list(
+  icon  = "universal-access",
+  bg    = "#fdfaf6",
+  color = "#e8f0e7",
+  value = reporta_limitacion
+)
+```
+
+```{r}
+#| content: valuebox
+#| title: "Personas que cuentan con certificado de discapacidad"
+list(
+  icon  = "universal-access-circle",
+  color = "#fdf0e8",
+  value = tiene_cud
+)
+```
+
+```{r}
+#| content: valuebox
+#| title: "Con problemática psicosocial en el último año"
+list(
+  icon  = "person-fill",
+  color = "#e8e0d0",
+  value = reporta_problema_psicosocial
+  )
+
+```
+### Prioridades percibidas
+
+#### Prioridades percibidas{width=40%}
+```{r}
+mi_barplot(prioridades_long$Categoria_General, 
+           horizontal = TRUE, 
+           titulo = "Problemáticas de salud percibidas", 
+           subtitulo = paste0("Problemas reportados por vivienda, n = ",
+                              nrow(prioridades_long)))
+```
+
+#### Prioridades percibidas (nube) {width=60%}
+```{r}
+top_words <- word_freq[1:60]
+top_words[, color_paleta := sample(c("#4a4a4a", "#8fb989", "#d4a373", "#2d5a27"), .N, replace = TRUE)]
+
+# 3. Renderizamos la nube usando la nueva columna
+top_words |>
+  e_charts() |>
+  # No necesitamos e_color() aquí porque lo definimos en la columna
+  e_cloud(
+    word = word, 
+    freq = freq, 
+    shape = "circle",
+    color = color_paleta # <--- LE DECIMOS QUE USE LA COLUMNA DE COLOR
+  ) |>
+  e_tooltip() |>
+  e_toolbox_feature(feature = "saveAsImage") |> 
+  e_title(
+    text = "Oportunidades de mejora percibidas por la comunidad", 
+    textStyle = list(color = "#2d5a27")
+  )
+```
+
+# Trabajo y educación
+## {.tabset}
+### Situación laboral (1)
+#### Condición laboral{width=40%}
+```{r}
+mi_barplot(individuos[edad_anos %in% c(18:65), condicion_de_actividad_laboral],
+           titulo = "Condición laboral", 
+           subtitulo = paste0("Condición laboral autorreportada de las personas entre 18 y 65 años, n = ", individuos[edad_anos %in% c(18:65),.N]),
+           horizontal= TRUE, color_barra = "#4a4a4a")
+```
+#### Modalidad {width=60%}
+```{r}
+mi_barplot(individuos[edad_anos %in% c(18:65), si_cuenta_con_trabajo_marque_el_principal],
+           titulo = "Modalidad laboral", 
+           subtitulo = paste0("Principal modalidad laboral autorreportada de las personas entre 18 y 65 años, n = ", individuos[edad_anos %in% c(18:65),.N]),
+           rotate_labels = TRUE, color_barra = "#b36239")
+```
+### Situación laboral (2)
+#### Rubro {width=70%}
+```{r}
+mi_barplot(individuos[edad_anos %in% c(18:65), el_rubro_principal_en_el_cual_se_desempena],
+           titulo = "Rubro laboral", 
+           subtitulo = paste0("Principal rubro laboral autorreportado de las personas entre 18 y 65 años, n = ", individuos[edad_anos %in% c(18:65),.N]),
+           rotate_labels = TRUE, ordenar_por_frecuencia = TRUE)
+```
+
+#### Población {width=30%}
+```{r}
+#| content: valuebox
+#| title: "Mayores de 65 años jubilados"
+list(
+  icon  = "person-fill",
+  color = "#e8e0d0",
+  value = adultos_mayores_jubilados
+  )
+
+```
+
+```{r}
+#| content: valuebox
+#| title: "Mayores de 65 años con pensión no contributiva"
+list(
+  icon  = "person",
+  color = "#d4a373",
+  value = adultos_mayores_trabajadores
+  )
+
+```
+
+```{r}
+#| content: valuebox
+#| title: "Mayores de 65 años que trabajan y/o buscan trabajo"
+list(
+  icon  = "people",
+  color = "#e8f0e7",
+  value = adultos_mayores_trabajadores
+  )
+
+```
+### Programas sociales
+```{r}
+tabla_univariada2(programas_tab[])
+
+```
+
+### Nivel educativo
+#### 
+```{r}
+mi_barplot(individuos[edad_anos > 17]$nivel_educativo_al_que_asiste_o_maximo_que_curso, 
+           ordenar_por_frecuencia = F,
+           rotate_labels = T,
+           titulo = "Máximo nivel educativo, mayores de 18 años", 
+           subtitulo = paste0("Máximo nivel educativo alcanzado o en curso por autorreporte en adultos, n = ",
+                              individuos[edad_anos > 17, .N]), color_barra = "#4a4a4a"
+           )
+
+```
+
+#### 
+```{r}
+mi_barplot(individuos[edad_anos < 18]$nivel_educativo_al_que_asiste_o_maximo_que_curso, 
+           ordenar_por_frecuencia = F,
+           rotate_labels = T,
+           titulo = "Máximo nivel educativo, menores de 18 años", 
+           subtitulo = paste0("Máximo nivel educativo alcanzado o en curso por autorreporte en menores, n = ",
+                              individuos[edad_anos < 18, .N]), color_barra = "#b36239"
+           )
+
+```
+# Transporte
+## 
+### 
+```{r}
+tabla_univariada2(viaja_tab, caption = "Motivo por el que la familia viaja fuera de la localidad")
+
+```
+###
+```{r}
+tabla_univariada2(traslada_tab, caption = "Medio con el que la familia se traslada")
+```
+# Cultura y comunicación
+## {.tabset}
+### Uso de medios y redes
+#### Medios{width=40%}
+```{r}
+tabla_univariada2(informa_tab,
+caption = "Medio con el que la persona se informa sobre acontecimientos locales")
+```
+#### Uso de redes según grupo etario{width=60%}
+#####
+```{r}
+#| layout-ncol: 2
+#| echo: false
+
+# Gráfico 1: Menores de 15
+p_15 <- mi_barplot( 
+  x = redes_long[grupo_etario == "Hasta 15 años"]$Red,
+  titulo = "Redes, 0-15",
+  subtitulo = "Uso de redes en personas de hasta 15 años",
+  horizontal = FALSE,
+  color_barra = "#8fb989", # Light Sage Green
+  show_toolbox = FALSE 
+)
+p_15
+```
+```{r}
+# Gráfico 2: 16 a 25
+p_25 <- mi_barplot(
+  x = redes_long[grupo_etario == "16 a 25 años"]$Red,
+  titulo = "Redes, 16-25",
+  subtitulo = "Uso de redes en personas de 16 a 25 años",
+  horizontal = FALSE,
+  color_barra = "#d4a373", # Sand / Light Terracotta
+  show_toolbox = FALSE
+)
+p_25
+```
+#####
+```{r}
+# Gráfico 3: 26 a 40
+p_40 <- mi_barplot(
+  x = redes_long[grupo_etario == "26 a 40 años"]$Red,
+  titulo = "Redes, 26-40",
+  subtitulo = "Uso de redes en personas de 26 a 40 años",
+  horizontal = FALSE,
+  color_barra = "#b36239", # Burnt Orange / Copper
+  show_toolbox = FALSE
+)
+p_40
+```
+```{r}
+
+# Gráfico 4: Mayores de 40
+p_mayores <- mi_barplot(
+  x = redes_long[grupo_etario == "Más de 40 años"]$Red,
+  titulo = "Redes, >40",
+  subtitulo = "Uso de redes en personas de más de 40 años",
+  horizontal = FALSE,
+  color_barra = "#2d5a27", # Deep Forest Green
+  show_toolbox = FALSE
+)
+p_mayores
+```
+### Talleres
+####
+#####
+```{r}
+#| content: valuebox
+#| title: "Hogares que conocen los talleres"
+list(
+  icon  = "house-door-fill",
+  bg    = "#fdfaf6",
+  color = "#e8f0e7",
+  value = conocen_talleres
+)
+```
+
+
+```{r}
+#| content: valuebox
+#| title: "Hogares donde alguien asiste a talleres"
+list(
+  icon  = "house-heart-fill",
+  color = "#e8e0d0",
+  value = asisten_talleres
+)
+```
+#####
+```{r}
+tabla_univariada2(habitados[, .(Familias= .N), 
+                           .(`Motivo de no concurrencia a talleres` =si_los_conocen_y_no_asisten_por_que_motivo)][
+                             order(`Motivo de no concurrencia a talleres` %like% "Sin", `Motivo de no concurrencia a talleres` %like% "Otro",-Familias)],
+                             caption = "Motivo de no concurrencia en las familias que no usan los talleres")
+```
+### Oferta cultural
+#### {width=45%}
+```{r}
+mi_barplot(cultura_long$Categoria, horizontal = TRUE,
+           titulo = "Principales demandas culturales")
+
+```
+#### {width=55%}
+```{r}
+p_nube_cultura <- word_freq_cultura[1:50] |>
+  e_charts() |>
+  e_cloud(
+    word = word_display, 
+    freq = freq, 
+    color = color_paleta,
+    shape = "circle"
+  ) |>
+  e_title("Propuestas culturales de la comunidad") |>
+  e_tooltip()
+p_nube_cultura
+```
+# Ambiente
+## {.tabset}
+### Residuos 
+```{r}
+tabla_univariada2(residuos_tab)
+```
+### Problemáticas
+#### {width=40%} 
+```{r}
+mi_barplot(ambiente_long$Categoría, 
+           horizontal = TRUE, 
+           titulo = "Problemáticas ambientales percibidas", 
+           subtitulo = paste0("Problemas reportados por vivienda, n = ",
+                              nrow(ambiente_long)))
+```
+                              
+#### {width=40%} 
+
+
+```{r}
+p_nube_amb <- word_freq_amb[1:50] |>
+  e_charts() |>
+  e_cloud(
+    word = word_display, 
+    freq = freq, 
+    color = color_paleta,
+    shape = "circle"
+  ) |>
+  e_title("Preocupaciones ambientales de la comunidad") |>
+  e_tooltip()
+p_nube_amb
+```
+
+### Animales
+#### 
+```{r}
+tabla_univariada2(animales_tab)
+```
+
+####
+```{r}
+#| content: valuebox
+#| title: "Viviendas con animales domésticos"
+list(
+  icon  = "house-door-fill",
+  bg    = "#fdfaf6",
+  color = "#e8f0e7",
+  value = viviendas_domesticos
+)
+```
+
+```{r}
+#| content: valuebox
+#| title: "Promedio animales domésticos"
+list(
+  icon  = "house-door-fill",
+  bg    = "#fdfaf6",
+  color = "#e8f0e7",
+  value = promedio_domesticos
+)
+```
+#### 
+```{r}
+#| content: valuebox
+#| title: "Viviendas con animales de granja"
+list(
+  icon  = "house-door-fill",
+  bg    = "#fdfaf6",
+  color = "#e8f0e7",
+  value = viviendas_granja
+)
+```
+
+```{r}
+#| content: valuebox
+#| title: "Promedio de animales de granja"
+list(
+  icon  = "house-door-fill",
+  bg    = "#fdfaf6",
+  color = "#e8f0e7",
+  value = promedio_granja
+)
+```
+
