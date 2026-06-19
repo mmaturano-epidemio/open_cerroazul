@@ -426,18 +426,12 @@ individuos[is.na(el_rubro_principal_en_el_cual_se_desempena),
 individuos[is.na(percibe_pension_no_contributiva_1), percibe_pension_no_contributiva_1 := "Sin datos"]
 
 # menores_trabajadores <- 
-adultos_mayores_trabajadores <- paste0(individuos[edad_anos > 64 &! condicion_de_actividad_laboral %ilike% "no|sin",.N],
-                                       " (", 
-                                       round(individuos[edad_anos > 64 &! condicion_de_actividad_laboral %ilike% "no|sin",.N] / individuos[edad_anos > 64,.N] * 100),
-                                       "%)")
-adultos_mayores_jubilados <- paste0(individuos[edad_anos > 64 & percibe_jubilacion == "Sí",.N],
-                                     " (", 
-                                     round(individuos[edad_anos > 64 & percibe_jubilacion == "Sí",.N] / individuos[edad_anos > 64,.N] * 100),
-                                     "%)")
-adultos_mayores_pensionados <- paste0(individuos[edad_anos > 64 & !percibe_pension_no_contributiva_1 %ilike% "no",.N],
-                                    " (", 
-                                    round(individuos[edad_anos > 64 & !percibe_pension_no_contributiva_1 %ilike% "no",.N] / individuos[edad_anos > 64,.N] * 100),
-                                    "%)")
+adultos_mayores_trabajadores <- paste0( round(individuos[edad_anos > 64 &! condicion_de_actividad_laboral %ilike% "no|sin",.N] / individuos[edad_anos > 64,.N] * 100),
+                                       "%")
+adultos_mayores_jubilados <- paste0( round(individuos[edad_anos > 64 & percibe_jubilacion == "Sí",.N] / individuos[edad_anos > 64,.N] * 100),
+                                     "%")
+adultos_mayores_pensionados <-  paste0(round(individuos[edad_anos > 64 & !percibe_pension_no_contributiva_1 %ilike% "no",.N] / individuos[edad_anos > 64,.N] * 100),
+                                    "%")
 
 # Identificar columnas
 cols_prog <- names(individuos)[names(individuos) %ilike% "programas_sociales"]
@@ -562,14 +556,10 @@ redes_long[, Red := trimws(Red)]
 
 
 # ---- Talleres y eventos ----
-conocen_talleres <- paste0(habitados[conocen_los_talleres == "Sí",.N],
-                           " (",
-                           round(habitados[conocen_los_talleres == "Sí",.N] / habitados[,.N] * 100),
-                           "%)")
-asisten_talleres <-  paste0(habitados[alguien_del_grupo_familiar_asiste_a_los_talleres == "Sí",.N],
-                            " (",
-                            round(habitados[alguien_del_grupo_familiar_asiste_a_los_talleres == "Sí",.N] / habitados[,.N] * 100),
-                            "%)")
+conocen_talleres <- paste0(round(habitados[conocen_los_talleres == "Sí",.N] / habitados[,.N] * 100),
+                           "%")
+asisten_talleres <-  paste0(round(habitados[alguien_del_grupo_familiar_asiste_a_los_talleres == "Sí",.N] / habitados[,.N] * 100),
+                            "%")
 habitados[is.na(si_los_conocen_y_no_asisten_por_que_motivo), si_los_conocen_y_no_asisten_por_que_motivo := "Sin datos"]
 # ---- Cultura ----
 # 1. Identificación y Limpieza de Datos (Nivel Hogares - habitados)

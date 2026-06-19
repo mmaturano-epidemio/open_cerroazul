@@ -389,7 +389,7 @@ mi_barplot_pct(habitados$con_que_frecuencia_el_grupo_familiar_asiste_al_caps,
            subtitulo = paste0("Frecuencia autorreportada con que el grupo familiar asiste al CAPS, n = ",
                      nrow(habitados)),
            ordenar_por_frecuencia = FALSE, 
-           color_barra = "#4a4a4a"
+           color_barra = "#b36239"
            
            )
 ```
@@ -448,7 +448,7 @@ list(
 mi_barplot_pct(individuos[edad_anos %in% c(18:65), condicion_de_actividad_laboral],
            titulo = "Condición laboral", 
            subtitulo = paste0("Condición laboral autorreportada de las personas entre 18 y 65 años, n = ", individuos[edad_anos %in% c(18:65),.N]),
-           horizontal= TRUE, color_barra = "#4a4a4a")
+           horizontal= TRUE, color_barra = "#c47a4a")
 ```
 
 #### Rubro {width=40%}
@@ -456,7 +456,7 @@ mi_barplot_pct(individuos[edad_anos %in% c(18:65), condicion_de_actividad_labora
 mi_barplot_pct(individuos[edad_anos %in% c(18:65), el_rubro_principal_en_el_cual_se_desempena],
            titulo = "Rubro laboral", 
            subtitulo = paste0("Principal rubro laboral autorreportado de las personas entre 18 y 65 años, n = ", individuos[edad_anos %in% c(18:65),.N]),
-           rotate_labels = TRUE, ordenar_por_frecuencia = TRUE)
+           rotate_labels = TRUE, ordenar_por_frecuencia = TRUE,color_barra = "#4a7c43")
 ```
 
 #### Población {width=30%}
@@ -706,3 +706,93 @@ list(
 )
 ```
 
+# Acerca de {#acerca-de}
+
+## {.tabset}
+
+### Marco Legal y Metodología
+
+::: {.callout-important}
+## Protección de Datos Personales
+
+Este portal cumple con la **Ley 25.326 de Protección de Datos Personales** (Habeas Data) de la República Argentina y su decreto reglamentario 1558/2001.
+:::
+
+#### Consentimiento y participación
+
+- Cada hogar fue informado verbalmente sobre los objetivos del relevamiento, el uso que se daría a los datos y su derecho a no participar sin consecuencias.
+- La participación fue voluntaria y el **consentimiento se otorgó de forma verbal** al inicio de cada encuesta.
+
+<!-- #### Anonimización y confidencialidad -->
+
+- Los datos se presentan de forma **agregada y estadística**: no se publica información a nivel de hogar o persona individual.
+- Las categorías con muy pocos casos se **agrupan** para evitar que un valor aislado permita identificar a una familia o persona.
+- Los formularios originales y la base de datos sin agregar están bajo resguardo institucional, con acceso restringido al equipo técnico autorizado.
+
+<!#### Finalidad del tratamiento>
+
+Los datos se utilizan exclusivamente para diagnóstico territorial, planificación de políticas públicas, transparencia y rendición de cuentas ante la comunidad.
+
+<!#### Derechos de los participantes (Art. 14, Ley 25.326)>
+
+Todo participante puede ejercer en cualquier momento su derecho de **acceso, rectificación, supresión u oposición** respecto de los datos relevados sobre su hogar. Para ejercerlos, puede contactar a: [**dirección de correo institucional a completar**].
+
+#### Responsable del tratamiento
+
+**Comuna Villa Cerro Azul**
+Responsable técnico: [A completar]
+Contacto: [A completar]
+
+<!#### Sobre el relevamiento>
+
+- **Tipo de estudio**: relevamiento territorial de hogares, período 2024-2026.
+- **Instrumento**: cuestionario estructurado en papel, digitalizado posteriormente en Excel con doble entrada.
+- **Análisis y visualización**: realizados en R y Quarto.
+- **Limitaciones**: los datos son autorreportados (posibles sesgos de memoria o deseabilidad social) y reflejan un punto en el tiempo; algunas categorías presentan valores faltantes.
+
+### Autoría y contacto
+
+**Coordinación general**: [Nombre y cargo]
+
+**Equipo técnico**: [Nombres y roles — metodología, recolección, digitalización, portal]
+
+Agradecemos especialmente a las familias de Villa Cerro Azul por su participación, y a las autoridades comunales y organizaciones locales que facilitaron el relevamiento.
+
+**Herramientas utilizadas**: R, Quarto, data.table, echarts4r, kableExtra.
+
+**Contacto**
+Comuna Villa Cerro Azul · [email] · [teléfono] · [sitio web]
+
+Última actualización del portal: `r format(Sys.Date(), "%d de %B de %Y")`
+
+::: {.callout-tip}
+## ¿Cómo citar este portal?
+
+Comuna Villa Cerro Azul (2026). *Portal Estadístico Comunal: Relevamiento Territorial 2024-2026*. Villa Cerro Azul, Argentina. Disponible en: [URL del portal]
+:::
+
+### Preguntas Frecuentes
+
+::: {.callout-note collapse="true"}
+## ¿Cómo se garantiza que mis datos están protegidos?
+
+La información se publica de forma agregada y estadística, y las categorías con pocos casos se agrupan para que no sea posible identificar a una persona u hogar específico. Los datos originales se almacenan con acceso restringido al equipo técnico autorizado.
+:::
+
+::: {.callout-note collapse="true"}
+## ¿Puedo solicitar que se eliminen mis datos?
+
+Sí. De acuerdo con la Ley 25.326, puede solicitar el acceso, rectificación, supresión u oposición al tratamiento de sus datos contactando al responsable del tratamiento (ver sección de contacto).
+:::
+
+::: {.callout-note collapse="true"}
+## ¿Para qué se utilizarán estos datos?
+
+Para planificar políticas públicas locales, diseñar programas basados en evidencia y monitorear las necesidades de la comunidad. El portal solo muestra información agregada; los datos individuales no se comparten con terceros.
+:::
+
+::: {.callout-note collapse="true"}
+## ¿Puedo descargar la información del portal?
+
+Los gráficos pueden descargarse individualmente desde el ícono de descarga de cada visualización. Para solicitar datos agregados en formato tabla, contactar a [responsable técnico].
+:::
