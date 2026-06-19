@@ -354,42 +354,28 @@ mi_piechart(habitados$vivienda,
 
 #### Servicios
 ```{r}
-tabla_univariada2(servicios[!Servicios == "Gas natural",1:3])
+tabla_univariada2(rbind(servicios[!Servicios == "Gas natural",c(1,3)], 
+                        fuente_agua[1, c(1,3), with=F] |> setnames(old = names(fuente_agua)[1], new = "Servicios"))) 
+
 ```
 
-### Recurso hídrico {.tabset}
-#### Fuente y manejo de agua
+### Recurso hídrico 
+#### Manejo de agua
 #####
 ######
-```{r}
-tabla_univariada2(fuente_agua)
-```
 ######
 
 ```{r}
-tabla_univariada2(acopio_agua[,1:3])
+tabla_univariada2(acopio_agua[!`Manejo de agua` == "Trata aguas negras",c(1,3)][order(-`%`)])
 
 ```
-
-#### Capacidad de acopio  
-
-```{r}
-mi_barplot(x = habitados$acopio_agua, 
-           titulo = "Capacidad de acopio de agua", 
-           subtitulo = paste0("Total de viviendas según capacidad en litros, n = ", habitados[,.N]),
-           rotate_labels = TRUE,
-           horizontal = TRUE, 
-           ordenar_por_frecuencia = FALSE
-           )
-```
-
 
 # Salud
 ## {.tabset}
 ### Cobertura
 #### Cobertura de salud
 ```{r}
-mi_barplot(x = individuos$cobertura_de_salud, 
+mi_barplot_pct(x = individuos$cobertura_de_salud, 
            titulo = "Total de personas según cobertura de salud", 
            subtitulo = paste0("Fuente de cobertura de salud autorreportada, n = ", individuos[,.N]), 
            horizontal = TRUE 
@@ -398,7 +384,7 @@ mi_barplot(x = individuos$cobertura_de_salud,
 
 #### Frecuencia de asistencia al CAPS
 ```{r}
-mi_barplot(habitados$con_que_frecuencia_el_grupo_familiar_asiste_al_caps,
+mi_barplot_pct(habitados$con_que_frecuencia_el_grupo_familiar_asiste_al_caps,
            rotate_labels = TRUE, titulo = "Frecuencia de asistencia al CAPS", 
            subtitulo = paste0("Frecuencia autorreportada con que el grupo familiar asiste al CAPS, n = ",
                      nrow(habitados)),
@@ -412,9 +398,9 @@ mi_barplot(habitados$con_que_frecuencia_el_grupo_familiar_asiste_al_caps,
 #### Principales problemas{width=70%}
 ```{r}
 tabla_univariada2(
-  tabla_salud,
+  tabla_salud[,!2, with=F],
   caption = "Principales problemas de salud crónicos relevados",
-  col_names = c("Patología", "Personas", "%", "Edad Promedio"),
+  col_names = c("Patología", "%", "Edad Promedio"),
   align = "lrrr"
 )
 ```
@@ -453,61 +439,21 @@ list(
   )
 
 ```
-### Prioridades percibidas
-
-#### Prioridades percibidas{width=40%}
-```{r}
-mi_barplot(prioridades_long$Categoria_General, 
-           horizontal = TRUE, 
-           titulo = "Problemáticas de salud percibidas", 
-           subtitulo = paste0("Problemas reportados por vivienda, n = ",
-                              nrow(prioridades_long)))
-```
-
-#### Prioridades percibidas (nube) {width=60%}
-```{r}
-top_words <- word_freq[1:60]
-top_words[, color_paleta := sample(c("#4a4a4a", "#8fb989", "#d4a373", "#2d5a27"), .N, replace = TRUE)]
-
-# 3. Renderizamos la nube usando la nueva columna
-top_words |>
-  e_charts() |>
-  # No necesitamos e_color() aquí porque lo definimos en la columna
-  e_cloud(
-    word = word, 
-    freq = freq, 
-    shape = "circle",
-    color = color_paleta # <--- LE DECIMOS QUE USE LA COLUMNA DE COLOR
-  ) |>
-  e_tooltip() |>
-  e_toolbox_feature(feature = "saveAsImage") |> 
-  e_title(
-    text = "Oportunidades de mejora percibidas por la comunidad", 
-    textStyle = list(color = "#2d5a27")
-  )
-```
 
 # Trabajo y educación
 ## {.tabset}
-### Situación laboral (1)
-#### Condición laboral{width=40%}
+### Situación laboral 
+#### Condición laboral{width=30%}
 ```{r}
-mi_barplot(individuos[edad_anos %in% c(18:65), condicion_de_actividad_laboral],
+mi_barplot_pct(individuos[edad_anos %in% c(18:65), condicion_de_actividad_laboral],
            titulo = "Condición laboral", 
            subtitulo = paste0("Condición laboral autorreportada de las personas entre 18 y 65 años, n = ", individuos[edad_anos %in% c(18:65),.N]),
            horizontal= TRUE, color_barra = "#4a4a4a")
 ```
-#### Modalidad {width=60%}
+
+#### Rubro {width=40%}
 ```{r}
-mi_barplot(individuos[edad_anos %in% c(18:65), si_cuenta_con_trabajo_marque_el_principal],
-           titulo = "Modalidad laboral", 
-           subtitulo = paste0("Principal modalidad laboral autorreportada de las personas entre 18 y 65 años, n = ", individuos[edad_anos %in% c(18:65),.N]),
-           rotate_labels = TRUE, color_barra = "#b36239")
-```
-### Situación laboral (2)
-#### Rubro {width=70%}
-```{r}
-mi_barplot(individuos[edad_anos %in% c(18:65), el_rubro_principal_en_el_cual_se_desempena],
+mi_barplot_pct(individuos[edad_anos %in% c(18:65), el_rubro_principal_en_el_cual_se_desempena],
            titulo = "Rubro laboral", 
            subtitulo = paste0("Principal rubro laboral autorreportado de las personas entre 18 y 65 años, n = ", individuos[edad_anos %in% c(18:65),.N]),
            rotate_labels = TRUE, ordenar_por_frecuencia = TRUE)
@@ -546,28 +492,12 @@ list(
   )
 
 ```
-### Programas sociales
-```{r}
-tabla_univariada2(programas_tab[])
-
-```
 
 ### Nivel educativo
-#### 
-```{r}
-mi_barplot(individuos[edad_anos > 17]$nivel_educativo_al_que_asiste_o_maximo_que_curso, 
-           ordenar_por_frecuencia = F,
-           rotate_labels = T,
-           titulo = "Máximo nivel educativo, mayores de 18 años", 
-           subtitulo = paste0("Máximo nivel educativo alcanzado o en curso por autorreporte en adultos, n = ",
-                              individuos[edad_anos > 17, .N]), color_barra = "#4a4a4a"
-           )
-
-```
 
 #### 
 ```{r}
-mi_barplot(individuos[edad_anos < 18]$nivel_educativo_al_que_asiste_o_maximo_que_curso, 
+mi_barplot_pct(individuos[edad_anos < 18]$nivel_educativo_al_que_asiste_o_maximo_que_curso, 
            ordenar_por_frecuencia = F,
            rotate_labels = T,
            titulo = "Máximo nivel educativo, menores de 18 años", 
@@ -576,33 +506,23 @@ mi_barplot(individuos[edad_anos < 18]$nivel_educativo_al_que_asiste_o_maximo_que
            )
 
 ```
-# Transporte
-## 
-### 
-```{r}
-tabla_univariada2(viaja_tab, caption = "Motivo por el que la familia viaja fuera de la localidad")
 
-```
-###
-```{r}
-tabla_univariada2(traslada_tab, caption = "Medio con el que la familia se traslada")
-```
 # Cultura y comunicación
 ## {.tabset}
 ### Uso de medios y redes
-#### Medios{width=40%}
+#### Medios{width=25%}
 ```{r}
-tabla_univariada2(informa_tab,
+tabla_univariada2(informa_tab[, c(1,3)],
 caption = "Medio con el que la persona se informa sobre acontecimientos locales")
 ```
-#### Uso de redes según grupo etario{width=60%}
+#### Uso de redes según grupo etario{width=75%}
 #####
 ```{r}
 #| layout-ncol: 2
 #| echo: false
 
 # Gráfico 1: Menores de 15
-p_15 <- mi_barplot( 
+p_15 <- mi_barplot_pct( 
   x = redes_long[grupo_etario == "Hasta 15 años"]$Red,
   titulo = "Redes, 0-15",
   subtitulo = "Uso de redes en personas de hasta 15 años",
@@ -614,7 +534,7 @@ p_15
 ```
 ```{r}
 # Gráfico 2: 16 a 25
-p_25 <- mi_barplot(
+p_25 <- mi_barplot_pct(
   x = redes_long[grupo_etario == "16 a 25 años"]$Red,
   titulo = "Redes, 16-25",
   subtitulo = "Uso de redes en personas de 16 a 25 años",
@@ -627,7 +547,7 @@ p_25
 #####
 ```{r}
 # Gráfico 3: 26 a 40
-p_40 <- mi_barplot(
+p_40 <- mi_barplot_pct(
   x = redes_long[grupo_etario == "26 a 40 años"]$Red,
   titulo = "Redes, 26-40",
   subtitulo = "Uso de redes en personas de 26 a 40 años",
@@ -640,7 +560,7 @@ p_40
 ```{r}
 
 # Gráfico 4: Mayores de 40
-p_mayores <- mi_barplot(
+p_mayores <- mi_barplot_pct(
   x = redes_long[grupo_etario == "Más de 40 años"]$Red,
   titulo = "Redes, >40",
   subtitulo = "Uso de redes en personas de más de 40 años",
@@ -678,13 +598,13 @@ list(
 ```{r}
 tabla_univariada2(habitados[, .(Familias= .N), 
                            .(`Motivo de no concurrencia a talleres` =si_los_conocen_y_no_asisten_por_que_motivo)][
-                             order(`Motivo de no concurrencia a talleres` %like% "Sin", `Motivo de no concurrencia a talleres` %like% "Otro",-Familias)],
+                             order(`Motivo de no concurrencia a talleres` %like% "Sin", `Motivo de no concurrencia a talleres` %like% "Otro",-Familias)][, `%` := round(Familias * 100 / sum(Familias), 2)][, c(1,3)],
                              caption = "Motivo de no concurrencia en las familias que no usan los talleres")
 ```
 ### Oferta cultural
 #### {width=45%}
 ```{r}
-mi_barplot(cultura_long$Categoria, horizontal = TRUE,
+mi_barplot_pct(cultura_long$Categoria, horizontal = TRUE,
            titulo = "Principales demandas culturales")
 
 ```
@@ -706,12 +626,12 @@ p_nube_cultura
 ## {.tabset}
 ### Residuos 
 ```{r}
-tabla_univariada2(residuos_tab)
+tabla_univariada2(residuos_tab[, c(1,3)])
 ```
 ### Problemáticas
 #### {width=40%} 
 ```{r}
-mi_barplot(ambiente_long$Categoría, 
+mi_barplot_pct(ambiente_long$Categoría, 
            horizontal = TRUE, 
            titulo = "Problemáticas ambientales percibidas", 
            subtitulo = paste0("Problemas reportados por vivienda, n = ",
@@ -738,7 +658,7 @@ p_nube_amb
 ### Animales
 #### 
 ```{r}
-tabla_univariada2(animales_tab)
+tabla_univariada2(animales_tab[, c(1,3)])
 ```
 
 ####
@@ -759,7 +679,7 @@ list(
 list(
   icon  = "house-door-fill",
   bg    = "#fdfaf6",
-  color = "#e8f0e7",
+  color = "#e8e0d0",
   value = promedio_domesticos
 )
 ```
@@ -769,8 +689,8 @@ list(
 #| title: "Viviendas con animales de granja"
 list(
   icon  = "house-door-fill",
-  bg    = "#fdfaf6",
-  color = "#e8f0e7",
+  bg    = "#e8e0d0",
+ color = "#FFD39B",
   value = viviendas_granja
 )
 ```
@@ -781,7 +701,7 @@ list(
 list(
   icon  = "house-door-fill",
   bg    = "#fdfaf6",
-  color = "#e8f0e7",
+  color = "#fdf0e8",
   value = promedio_granja
 )
 ```

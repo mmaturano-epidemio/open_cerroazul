@@ -361,24 +361,16 @@ resumen_prioridades <- prioridades_long[, .(Menciones = .N), by = Prioridad][ord
 # [28] "limitacion_o_dificultad_4"                             
 # [29] "cuenta_con_certificado_de_discapacidad"                
 # [30] "problematica_psicosocial_en_el_ultimo_ano" 
-reporta_limitacion <- paste0(individuos[!is.na(limitacion_o_dificultad_1) &
-                                   !limitacion_o_dificultad_1 %ilike% "ninguna", 
-                                 .N], 
-                             " (",
-                             round(individuos[!is.na(limitacion_o_dificultad_1) &
+reporta_limitacion <- paste0(round(individuos[!is.na(limitacion_o_dificultad_1) &
                                           !limitacion_o_dificultad_1 %ilike% "ninguna", 
                                         .N] / nrow(individuos) * 100),
-                             "%)")
+                             "%")
 
-tiene_cud <- paste0(individuos[cuenta_con_certificado_de_discapacidad == "Sí",.N ],
-                    " (",
-                    round(individuos[cuenta_con_certificado_de_discapacidad == "Sí",.N ] / nrow(individuos) * 100),
-                    "%)")
+tiene_cud <- paste0(round(individuos[cuenta_con_certificado_de_discapacidad == "Sí",.N ] / nrow(individuos) * 100),
+                    "%")
 
-reporta_problema_psicosocial <- paste0(individuos[problematica_psicosocial_en_el_ultimo_ano == "Sí",.N ],
-                                       " (",
-                                       round(individuos[problematica_psicosocial_en_el_ultimo_ano == "Sí",.N ] / nrow(individuos) * 100),
-                                       "%)")
+reporta_problema_psicosocial <- paste0(round(individuos[problematica_psicosocial_en_el_ultimo_ano == "Sí",.N ] / nrow(individuos) * 100),
+                                       "%")
 
 # --- Wordcloud ----
 # Extract the raw text vector, dropping NAs
@@ -686,19 +678,15 @@ animales_tab[, `%` := round(Familias / habitados[,.N] * 100, 1)]
 
 animales_tab[Manejo %ilike% "antirr", Manejo := "Antirrábica en el Último año"]
 
-viviendas_domesticos <- paste0(habitados[total_de_animales_domesticos > 0, .N], 
-                               " (",
-                               round(habitados[total_de_animales_domesticos > 0, .N] / total_viviendas * 100),
-                               "%)")
+viviendas_domesticos <- paste0(round(habitados[total_de_animales_domesticos > 0, .N] / total_viviendas * 100),
+                               "%")
 
 promedio_domesticos <- habitados[total_de_animales_domesticos > 0, mean(total_de_animales_domesticos)] |> round(1)
 
-viviendas_granja <- paste0(habitados[total_de_animales_de_granja > 0, .N], 
-                               " (",
-                               round(habitados[total_de_animales_de_granja > 0, .N] / total_viviendas * 100),
-                               "%)")
+viviendas_granja <- paste0( round(habitados[total_de_animales_de_granja > 0, .N] / total_viviendas * 100),
+                               "%")
 
-promedio_granja <- habitados[total_de_animales_de_granja > 0, mean(total_de_animales_de_granja)]
+promedio_granja <- habitados[total_de_animales_de_granja > 0, mean(total_de_animales_de_granja)]|> round(1)
 
 # ---- Problemáticas ambientales más importantes ----
 
