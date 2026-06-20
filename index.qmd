@@ -326,18 +326,52 @@ list(
   )
 
 ```
+### Composición de la población (4)
 
+#### {width=70%}
+
+```{r}
+#| title: "Pirámide poblacional: población relevada"
+#| echo: false
+#| message: false
+#| warning: false
+piramide
+```
+
+#### {width=35%}
 
 ```{r}
 #| content: valuebox
-#| title: "Personas descendientes de pueblos originarios"
+#| title: "Viviendas unipersonales"
 list(
-  icon  = "sun",
+  icon  = "person",
   bg    = "#fdfaf6",
-  color = "#e8f0e7",
-  value = indigena
+  color = "#e8e0d0",
+  value = unipersonales
 )
 ```
+
+```{r}
+#| content: valuebox
+#| title: "Viviendas sólo habitadas por >65"
+list(
+  icon  = "people",
+  color = "#e8f0e7",
+  value = mayores_65
+)
+```
+
+```{r}
+#| content: valuebox
+#| title: "Familias monoparentales"
+list(
+  icon  = "people-fill",
+  color = "#fdf0e8",
+  value = viviendas_un_adulto
+  )
+
+```
+
 
 
 # Infraestructura
