@@ -19,7 +19,7 @@ format:
 
 ```{r setup, include=FALSE}
 source("setup.R")
-source("gráficos.R")
+source("gráficos_optimizado.R")
 ```
 
 # Demografía
@@ -342,7 +342,7 @@ list(
 
 # Infraestructura
 ## {.tabset}
-### Vivienda
+### Vivienda, servicios y recurso hídrico
 ##### Condición de la vivienda
 ```{r}
 mi_piechart(habitados$vivienda, 
@@ -359,11 +359,7 @@ tabla_univariada2(rbind(servicios[!Servicios == "Gas natural",c(1,3)],
 
 ```
 
-### Recurso hídrico 
 #### Manejo de agua
-#####
-######
-######
 
 ```{r}
 tabla_univariada2(acopio_agua[!`Manejo de agua` == "Trata aguas negras",c(1,3)][order(-`%`)])
@@ -497,12 +493,12 @@ list(
 
 #### 
 ```{r}
-mi_barplot_pct(individuos[edad_anos < 18]$nivel_educativo_al_que_asiste_o_maximo_que_curso, 
+mi_barplot_pct(individuos[edad_anos > 17]$nivel_educativo_al_que_asiste_o_maximo_que_curso, 
            ordenar_por_frecuencia = F,
            rotate_labels = T,
            titulo = "Máximo nivel educativo, menores de 18 años", 
-           subtitulo = paste0("Máximo nivel educativo alcanzado o en curso por autorreporte en menores, n = ",
-                              individuos[edad_anos < 18, .N]), color_barra = "#b36239"
+           subtitulo = paste0("Máximo nivel educativo alcanzado o en curso por autorreporte en mayores, n = ",
+                              individuos[edad_anos > 17, .N]), color_barra = "#b36239"
            )
 
 ```
@@ -604,8 +600,23 @@ tabla_univariada2(habitados[, .(Familias= .N),
 ### Oferta cultural
 #### {width=45%}
 ```{r}
-mi_barplot_pct(cultura_long$Categoria, horizontal = TRUE,
-           titulo = "Principales demandas culturales")
+cat_cultura <- cultura_long$Categoria
+
+niveles_ordenados <- data.table(categoria = as.character(cat_cultura))[
+  , .N, by = categoria
+][order(N)]$categoria
+
+niveles_ordenados <- c("Otros", setdiff(niveles_ordenados, "Otros"))
+
+cat_cultura_factor <- factor(as.character(cat_cultura), levels = niveles_ordenados)
+
+mi_barplot_pct(cat_cultura_factor, 
+               horizontal = TRUE, 
+               titulo = "Principales demandas culturales", 
+               subtitulo = paste0("Problemas reportados por vivienda, n = ",
+                                  nrow(cultura_long)),
+               ordenar_por_frecuencia = FALSE,
+               agrupar_otros = FALSE)
 
 ```
 #### {width=55%}
@@ -631,11 +642,23 @@ tabla_univariada2(residuos_tab[, c(1,3)])
 ### Problemáticas
 #### {width=40%} 
 ```{r}
-mi_barplot_pct(ambiente_long$Categoría, 
-           horizontal = TRUE, 
-           titulo = "Problemáticas ambientales percibidas", 
-           subtitulo = paste0("Problemas reportados por vivienda, n = ",
-                              nrow(ambiente_long)))
+cat_amb <- ambiente_long$Categoría
+
+niveles_ordenados <- data.table(categoria = as.character(cat_amb))[
+  , .N, by = categoria
+][order(N)]$categoria
+
+niveles_ordenados <- c("Otros", setdiff(niveles_ordenados, "Otros"))
+
+cat_amb_factor <- factor(as.character(cat_amb), levels = niveles_ordenados)
+
+mi_barplot_pct(cat_amb_factor, 
+               horizontal = TRUE, 
+               titulo = "Problemáticas ambientales percibidas", 
+               subtitulo = paste0("Problemas reportados por vivienda, n = ",
+                                  nrow(ambiente_long)),
+               ordenar_por_frecuencia = FALSE,
+               agrupar_otros = FALSE)
 ```
                               
 #### {width=40%} 

@@ -583,7 +583,7 @@ cultura_long[, Categoria := fcase(
   Propuesta %ilike% "deporte|ajedrez|futbol|gimnasio|yoga|pilates|caminata|tai chi|fisica", "Deporte y Bienestar",
   Propuesta %ilike% "niñx|infancia|adolescente|joven|mayor", "Segmentos Específicos (Infancias/ Adultos mayores)",
   Propuesta %ilike% "baño|wifi|biblioteca|lugar fisico|espacio|comunicacion", "Infraestructura y Servicios",
-  default = "Otras Expresiones Culturales"
+  default = "Otros"
 )]
 
 # 3. Procesamiento de Texto para la Nube (Bigramas y Tokens)
@@ -703,7 +703,7 @@ ambiente_long[, Categoría := fcase(
   Problemática %ilike% "ruid|vehi|auto|sonor|audit|luces", "Contaminación visual y auditiva / vehículos",
   Problemática %ilike% "residu|tacho|basur|quema|rsu", "Residuos sólidos urbanos",
   Problemática %ilike% "calle|alumbrado|vía|via|eléc|elec|luz", "Vialidad e infraestructura",
-  default = "Otros problemas ambientales"
+  default = "Otros"
 )]
 
 # # 3. Procesamiento de Texto para la Nube (Bigramas y Tokens)
