@@ -530,7 +530,7 @@ list(
 mi_barplot_pct(individuos[edad_anos > 17]$nivel_educativo_al_que_asiste_o_maximo_que_curso, 
            ordenar_por_frecuencia = F,
            rotate_labels = T,
-           titulo = "Máximo nivel educativo, menores de 18 años", 
+           titulo = "Máximo nivel educativo, mayores de 18 años", 
            subtitulo = paste0("Máximo nivel educativo alcanzado o en curso por autorreporte en mayores, n = ",
                               individuos[edad_anos > 17, .N]), color_barra = "#b36239"
            )
