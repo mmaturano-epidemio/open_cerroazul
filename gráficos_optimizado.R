@@ -288,7 +288,10 @@ mi_barplot_pct <- function(x,
                            ordenar_por_frecuencia = TRUE,
                            decimales = 1,                  # decimales a mostrar en %
                            agrupar_otros = TRUE,           # agrupar categorías chicas en "Otros"
-                           umbral_otros = 0.05) {          # umbral de frecuencia relativa (5%)
+                           umbral_otros = 0.05,            # umbral de frecuencia relativa (5%)
+                           n_base = NULL) {                # denominador externo para variables
+  # no mutuamente excluyentes (ej. redes
+  # sociales: n de personas, no de respuestas)
   
   # Preparar datos
   if (is.factor(x)) {
@@ -329,8 +332,17 @@ mi_barplot_pct <- function(x,
     grafico_data[, categoria := factor(categoria, levels = categoria)]
   }
   
-  # Calcular porcentaje sobre el total (post-filtro de NA y post-agrupamiento)
-  grafico_data[, pct := round(100 * N / sum(N), decimales)]
+  # Calcular porcentaje.
+  # - Sin n_base (default): denominador = sum(N), los % suman 100.
+  #   Correcto para variables mutuamente excluyentes.
+  # - Con n_base: denominador = n de personas (o el universo que corresponda),
+  #   los % pueden sumar >100. Correcto para variables no mutuamente excluyentes
+  #   (ej. uso de redes sociales, problemáticas ambientales percibidas).
+  #   El umbral de agrupar_residual siempre se evalúa sobre sum(N) para que
+  #   la decisión de qué es "chico" sea consistente independientemente del
+  #   denominador final.
+  denominador <- if (!is.null(n_base)) n_base else sum(grafico_data$N)
+  grafico_data[, pct := round(100 * N / denominador, decimales)]
   
   # Crear gráfico base
   p <- grafico_data |>

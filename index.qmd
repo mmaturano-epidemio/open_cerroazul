@@ -600,9 +600,33 @@ p_mayores <- mi_barplot_pct(
 )
 p_mayores
 ```
+
+### Uso de medios y redes (2)
+#### 
+##### Medios{width=25%}
+```{r}
+tabla_univariada2(informa_tab[, c(1,3)],
+caption = "Medio con el que la persona se informa sobre acontecimientos locales (> 18 años)")
+```
+##### Uso de redes {width=75%}
+```{r}
+#| layout-ncol: 2
+#| echo: false
+
+p_todos <- mi_barplot_pct( 
+  x = redes_long2$Red,
+  titulo = "Redes, >18",
+  subtitulo = "Uso de redes en personas mayores de 18 años",
+  horizontal = FALSE,
+  color_barra = "#8fb989",
+  show_toolbox = FALSE,
+  n_base = individuos[edad_anos > 17, .N]   # <-- denominador: personas, no respuestas
+)
+p_todos
+
+```
 ### Talleres
 ####
-#####
 ```{r}
 #| content: valuebox
 #| title: "Hogares que conocen los talleres"
@@ -624,7 +648,9 @@ list(
   value = asisten_talleres
 )
 ```
-#####
+
+####
+
 ```{r}
 tabla_univariada2(habitados[, .(Familias= .N), 
                            .(`Motivo de no concurrencia a talleres` =si_los_conocen_y_no_asisten_por_que_motivo)][
